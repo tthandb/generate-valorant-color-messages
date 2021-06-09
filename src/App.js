@@ -9,61 +9,69 @@ import {
   Input, Radio, RadioGroup,
   Stack, Text, Textarea, useClipboard, VStack
 } from "@chakra-ui/react"
-import {useEffect, useState} from "react";
-import {generateTag} from "./utils";
+import { useState } from "react";
+import { generateRandom, generateTag } from "./utils";
 
 function App() {
   const [text, setText] = useState('')
   const [resultText, setResultText] = useState('')
   const [color, setColor] = useState('none')
-  const {hasCopied, onCopy} = useClipboard(resultText)
+  const { hasCopied, onCopy } = useClipboard(resultText)
   const handleChange = (event) => {
     setText(event.target.value)
   }
   const handleClick = () => {
     setResultText(generateTag(text, color))
-
   }
+  const handleClickRandom = () => {
+    setResultText(generateRandom(text, color))
+  }
+
+
   return (
-      <ChakraProvider>
-        <Container maxW="container.lg">
-          <VStack spacing={5}>
-            <Heading>Generate VALULRANT color messages</Heading>
-            <RadioGroup defaultValue="red" onChange={setColor} value={color}>
-              <HStack spacing="24px">
-                <Radio value="none" colorScheme="blackAlpha">
-                  <Text fontWeight={500} color="blackAlpha">None</Text>
-                </Radio>
-                <Radio value="red" colorScheme="red">
-                  <Text fontWeight={500} color="red">Red</Text>
-                </Radio>
-                <Radio value="green" colorScheme="green">
-                  <Text fontWeight={500} color="green">Green</Text>
-                </Radio>
-                <Radio value="blue" colorScheme="blue">
-                  <Text fontWeight={500} color="blue">Blue</Text>
-                </Radio>
-                <Radio value="yellow" colorScheme="yellow">
-                  <Text fontWeight={500} color="#D69E2E">Yellow</Text>
-                </Radio>
-                <Radio value="purple" colorScheme="purple">
-                  <Text fontWeight={500} color="purple">Purple</Text>
-                </Radio>
-              </HStack>
-            </RadioGroup>
-            <Textarea placeholder="Type some trashes..." w={500} h={200} resize="none" value={text}
-                      onChange={handleChange}/>
+    <ChakraProvider>
+      <Container maxW="container.lg">
+        <VStack spacing={5}>
+          <Heading>Generate VALULRANT color messages</Heading>
+          <RadioGroup defaultValue="red" onChange={setColor} value={color}>
+            <HStack spacing="24px">
+              <Radio value="none" colorScheme="blackAlpha">
+                <Text fontWeight={500} color="blackAlpha">None</Text>
+              </Radio>
+              <Radio value="red" colorScheme="red">
+                <Text fontWeight={500} color="red">Red</Text>
+              </Radio>
+              <Radio value="green" colorScheme="green">
+                <Text fontWeight={500} color="green">Green</Text>
+              </Radio>
+              <Radio value="blue" colorScheme="blue">
+                <Text fontWeight={500} color="blue">Blue</Text>
+              </Radio>
+              <Radio value="yellow" colorScheme="yellow">
+                <Text fontWeight={500} color="#D69E2E">Yellow</Text>
+              </Radio>
+              <Radio value="purple" colorScheme="purple">
+                <Text fontWeight={500} color="purple">Purple</Text>
+              </Radio>
+            </HStack>
+          </RadioGroup>
+          <Textarea placeholder="Type some trashes..." w={500} h={200} resize="none" value={text}
+            onChange={handleChange} />
+          <HStack>
             <Button onClick={handleClick}>Generate</Button>
+            <Button onClick={handleClickRandom}>GenerateRandom</Button>
             {resultText &&
-            <VStack>
-              <Textarea w={500} h={200} resize="none" value={resultText}/>
               <Button onClick={onCopy}>
-                {hasCopied ? "Copied" : "Copy"}
-              </Button>
+                {hasCopied ? 'Copied' : 'Copy'}
+              </Button>}
+          </HStack>
+          {resultText &&
+            <VStack>
+              <Textarea w={500} h={200} resize="none" value={resultText} />
             </VStack>}
-          </VStack>
-        </Container>
-      </ChakraProvider>
+        </VStack>
+      </Container>
+    </ChakraProvider>
   );
 }
 
